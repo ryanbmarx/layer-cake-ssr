@@ -8,20 +8,16 @@
 	import { restrictionClass } from "./utils/restriction-class";
 
 	// Components
-	import Modal from "./components/Modal.svelte";
-	import Map from "./components/Map.svelte";
-	import SocialShare from "./components/SocialShare.svelte";
-	import Dots from "./icons/Dots.svelte";
-	import ToggleNav from "./components/ToggleNav.svelte";
+	// import Modal from "./components/Modal.svelte";
+	// import Map from "./components/Map.svelte";
+	// import SocialShare from "./components/SocialShare.svelte";
+	// import Dots from "./icons/Dots.svelte";
+	// import ToggleNav from "./components/ToggleNav.svelte";
 	import Sparkline from "./components/Sparkline.svelte";
 
-	export let hammer;
-	export let headline;
-	export let deck;
-	export let share_text;
 	export let states = [];
 	export let buckets = {};
-	export let date_updated;
+
 
 	// Handling responsive designs ... this is the break between stacked maps and the toggle nav
 	let toggleMinWidth = "768px";
@@ -30,42 +26,7 @@
 
 	let updates = [];
 	let sortBy = "";
-	let modal;
-	let availableData = ["caseload", "restrictions", "mobility"];
 	let dataToShow = "caseload";
-
-	// TODO ... spreadsheet?
-	let legendData = {
-		restrictions: {
-			label: "State restrictions",
-			sublabel: "Are states loosening or tightening the rules?",
-			buckets: [
-				{ value: "easing", label: "Restrictions easing" },
-				{ value: "lifted", label: "Restrictions lifted" },
-				{ value: "tightening", label: "Restrictions tightening" },
-				{ value: "no-recent-change", label: "Restrictions unchanged" },
-				{ value: "paused", label: "Reopening paused" },
-			],
-		},
-		caseload: {
-			label: "Trends in new cases",
-			sublabel: "Are new infections on the rise?",
-			buckets: [
-				{ value: "growing", label: "New cases are growing" },
-				{ value: "shrinking", label: "New cases are shrinking" },
-				{ value: "steady", label: "New cases are steady" },
-			],
-		},
-		mobility: {
-			label: "Mobility",
-			sublabel: "Are people leaving their homes more or less than last week?",
-			buckets: [
-				{ value: "more", label: "Leaving homes more" },
-				{ value: "less", label: "Leaving homes less" },
-				{ value: "steady", label: "Holding steady" },
-			],
-		},
-	};
 
 	$: sortedStates = states.sort((a, b) => {
 		if (sortBy == "state") {
@@ -78,7 +39,6 @@
 	$: sortByLabel = sortBy == "state" ? "State, A-Z" : "Latest update";
 
 	onMount(() => {
-		analytics.fireEvent(`${process.env.PROJECT_SLUG}-loaded`);
 		sortBy = "last_update";
 		if (window !== undefined) {
 			// Init our media watcher
@@ -130,18 +90,6 @@
 				return b;
 			}, []);
 		return bux.join(", ");
-	}
-
-	function openModal(evt) {
-		modal.open(evt.detail);
-	}
-
-	function switchData(e, btn) {
-		// console.log(e, btn);
-		dataToShow = btn.dataset.toShow;
-		analytics.fireEvent(
-			`storytelling-covid-map-reopening-america-toggle-${dataToShow}`
-		);
 	}
 </script>
 
@@ -436,31 +384,6 @@
 </style>
 
 <div class="reopening" foo="bar">
-	<header class="section top">
-		<h1 class="headline-container">
-			<Dots />
-			<label class="hammer">{hammer}</label>
-			<span class="headline">{headline}</span>
-		</h1>
-		<p class="last-update">Last update: {formatDate(date_updated)}</p>
-		<SocialShare shareHeadline={share_text} />
-		{@html processText(deck)}
-	</header>
-	<section class="maps section" class:maps--toggle={shouldToggle}>
-		{#if shouldToggle}
-			<ToggleNav handleClick={switchData} {availableData} {legendData} {dataToShow} />
-		{/if}
-		{#each availableData as d}
-			<Map
-				visible={!shouldToggle || (shouldToggle && dataToShow === d)}
-				toggled={shouldToggle}
-				data={states}
-				dataToShow={d}
-				{updates}
-				legendData={legendData[d]}
-				on:modal:open={openModal} />
-		{/each}
-	</section>
 
 	<section id="stories" class="bg-screen">
 		<div class="section">
@@ -549,4 +472,3 @@
 		</div>
 	</section>
 </div>
-<Modal bind:this={modal} />
