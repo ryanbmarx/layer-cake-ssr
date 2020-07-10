@@ -408,9 +408,6 @@
 					class="update"
 					bind:this={updates[i]}>
 					<label class="update__state">{st.state}</label>
-					<h3 class="update__headline {restrictionClass(st.restriction_trend)}">
-						{updateHeadline(st)}
-					</h3>
 					
 					{#if st.caseload_trend}
 						<h4>Caseload</h4>
