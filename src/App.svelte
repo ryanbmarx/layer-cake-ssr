@@ -411,24 +411,7 @@
 					<h3 class="update__headline {restrictionClass(st.restriction_trend)}">
 						{updateHeadline(st)}
 					</h3>
-					{#if st.last_update}
-						<p class="update__date">Updated {formatDate(st.last_update)}</p>
-					{/if}
-					{#if st.copy}
-						<p>{st.copy}</p>
-					{:else}
-						<p>No update available for {st.state}.</p>
-					{/if}
-					<p class="stay-at-home">
-						<strong>Stay-at-home order:</strong>
-						{closureStatus(st)}
-					</p>
-					{#if st.eased_buckets}
-						<p class="affected-sectors">
-							<strong>Affected sectors:</strong>
-							{bucketsForState(st)}
-						</p>
-					{/if}
+					
 					{#if st.caseload_trend}
 						<h4>Caseload</h4>
 						<p class="affected-sectors">
@@ -437,36 +420,7 @@
 						<!-- DEBUG: This is the main LayerCake component -->
 						<Sparkline></Sparkline>
 					{/if}
-					{#if st.mobilityString}
-						<p class="affected-sectors">
-							<strong>Mobility:</strong>
-							{@html st.mobilityString}
-						</p>
-					{/if}
-					{#if st.mobility && st.mobility.leave_home_7day_change}
-						<p class="affected-sectors">
-							<strong>Mobility:</strong>
-							For the seven days ending {formatDate(st.mobility.latest_7day_date)}, the
-							share of residents leaving their homes was about
-							<strong>
-								{floatFormat(Math.abs(st.mobility.leave_home_7day_change))}% {st.mobility.direction}
-							</strong>
-							than the seven days prior, data from SafeGraph show.
-						</p>
-					{/if}
-					{#if st.caseloadAverage}
-						<p class="affected-sectors">
-							{@html st.caseloadAverage}
-						</p>
-					{/if}
-					{#if st.read_more_url}
-						<p class="read-more">
-							<strong>Read more:</strong>
-							<a href={st.read_more_url} target="_blank" rel="noreferrer noopener">
-								{st.read_more_url}
-							</a>
-						</p>
-					{/if}
+					
 				</div>
 			{/each}
 		</div>
