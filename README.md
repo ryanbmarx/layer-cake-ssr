@@ -8,7 +8,7 @@ Right now, this app employs a sparkline in the updates at the bottom of the page
 Error: <LayerCake> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules
 ```
 
-The static rendering is handled with `gulp uw` which generates the static HTML and puts it into a structured JSON format suitable for our web servers. The gulp task uses `./ssr.js` which is where all the static rendering takes place.
+The static rendering is handled with `gulp uw` which generates the static HTML and puts it into a structured JSON format suitable for our web servers. The gulp task uses `./ssr.js` which is where all the static rendering takes place. The json file ends up in `./public/uw/covid-map-reopening-america.json`. 
 
 
 ## About
