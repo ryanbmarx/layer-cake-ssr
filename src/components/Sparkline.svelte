@@ -21,5 +21,14 @@
 </style>
 <div class="chart-container">
 <!-- X and Y are the keys from the data to use -->
-  <LayerCake></LayerCake>
+  <LayerCake     
+    ssr={true}
+    percentRange={true}
+    x='x'
+    y='y'
+    data={points}>
+      <ScaledSvg>
+        <Line></Line>
+      </ScaledSvg>
+    </LayerCake>
 </div>
